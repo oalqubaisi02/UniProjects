@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Course"
+        android:textSize="50dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"
+        android:layout_marginTop="30dp"
+        android:background="#06255A"/>
+
+    <TextView
+        android:id="@+id/nameView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Course name:"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:layout_below="@+id/title"
+        android:layout_marginTop="100dp"
+        android:layout_marginLeft="20dp"
+        android:background="#06255A"/>
+
+    <EditText
+        android:id="@+id/nameText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/nameView"
+        android:layout_toRightOf="@+id/nameView"
+        android:hint="Enter course name"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/hourView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Credit hours:"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:layout_below="@+id/nameView"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:background="#06255A"/>
+
+    <EditText
+        android:id="@+id/hourText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/hourView"
+        android:layout_toRightOf="@+id/hourView"
+        android:hint="Enter credit hours"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <TextView
+        android:id="@+id/gradeView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Course grade:"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:padding="10dp"
+        android:layout_below="@+id/hourView"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="20dp"
+        android:background="#06255A"/>
+
+    <EditText
+        android:id="@+id/gradeText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/gradeView"
+        android:layout_toRightOf="@+id/gradeView"
+        android:hint="Enter grade in points"
+        android:gravity="center"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"/>
+
+    <Button
+        android:onClick="AddCourse"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/gradeView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="Add"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:padding="15dp"
+        android:backgroundTint="#06255A"/>
+</RelativeLayout>

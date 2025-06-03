@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Main Menu"
+        android:textSize="45dp"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:layout_centerHorizontal="true"
+        android:padding="20dp"
+        android:layout_marginTop="30dp"
+        android:background="#06255A"/>
+
+    <Button
+        android:id="@+id/addCourseButton"
+        android:onClick="AddBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Add Course"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/title"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:padding="15dp"
+        android:backgroundTint="#06255A"/>
+
+    <Button
+        android:id="@+id/calculateButton"
+        android:onClick="CalculateBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calculate CGPA/GPA"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/addCourseButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:padding="15dp"
+        android:backgroundTint="#06255A"/>
+
+    <Button
+        android:id="@+id/deleteCourseButton"
+        android:onClick="DeleteBtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Delete Course"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        android:layout_below="@+id/calculateButton"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:padding="15dp"
+        android:backgroundTint="#06255A"/>
+</RelativeLayout>
