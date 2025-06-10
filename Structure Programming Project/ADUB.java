@@ -1,214 +1,240 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
- */
-package adub;
 import java.util.Scanner;
-import java.util.Random;
-/**
- *
- * @author omar
- */
+
 public class ADUB {
-    public static Scanner information;
-    public static int acounts[] = new int[10]; //array for account numbers
-    public static int pin[] = new int[10]; //array for pins
-    public static String names[] = new String[10]; //array for names
-    public static int numbers[] = new int[10]; //array for phone numbers
-    public static double salary[] = new double[10]; //array for salary
-    public static String gender[] = new String[10]; //array for genders
-    public static double balance[] = new double[10]; //array for balance 
-    public static int trans[] = new int[100]; //array for transactions
-    public static double loanPerc = 10; //the percent of loan for example if salary is 1000 then loan = 1000*10 = 10000 AED
-    public static int loginAcc = 0 ; //intial acount number
-    public static int pass = 1 ; //intial pin code
-    public static int ipin;
+    public static Scanner input = new Scanner(System.in);
+    public static int[] IDs = new int[10];
+    public static String[] PINs = new String[10];
+    public static double balance[] = new double[10];
+    public static int loginAcc;
 
     public static void main(String[] args) {
-        information = new Scanner(System.in);
-        //welcome message
-        System.out.println("\nWelcome To Abu Dhabi University Bank \n\n");
-        System.out.println("1-Sign up \t 2-Login");
-        int opt = information.nextInt();
-        if(opt == 1){
-            //create new account and then redirect you back to login
-            int x = createAccount();
-            main(args);
-        }
-        if(opt == 2){
-            if(login()){
-                //after login will open menu 
-                int opt2 =1;
-                while(opt2 != 0){
-                    System.out.println("\n==========================================");
-                    System.out.println("Menu:\n");
-                    System.out.println("1-View balance");
-                    System.out.println("2-Deposit");
-                    System.out.println("3-Withdraw");
-                    System.out.println("4-Loan");
-                    System.out.println("5-Delete Account");
-                    System.out.println("6-Logout");
-                    System.out.println("==========================================");
-                    System.out.println("Please select an option:");
-                    opt2=information.nextInt();
-                    switch(opt2){
-                        //switch for the selection from the menu
-                    case 1:getBalance(loginAcc);
-                           break;    
-                    case 2:System.out.println("Enter an amout you want to deposit:");
-                           Deposit(information.nextDouble(),loginAcc);
-                           break;
-                    case 3:System.out.println("Enter an amout you want to withdraw:");
-                           withDraw(information.nextDouble(),loginAcc);
-                           break;
-                    case 4:System.out.println("Enter an amount for loan:");
-                           getLoan(information.nextDouble(),loginAcc);
-                           break;
-                    case 5:System.out.println("ARE YOU SURE? \n1-yes , 2-no");
-                           int oo = information.nextInt();
-                           if(oo==1){
-                                delete();
-                                main(args);
-                                break;
-                            }
-                           
-                    case 6:opt=0;
-                           main(args);
-                           break;       
-                    }
-                }
-            }else{
-                System.out.println("Sorry Invalid Login");
+        System.out.println("Welcome to Abu Dhabi University Bank\n");
+        System.out.println("1) Sign up\n2) Login\n3) Exit");
+        System.out.println("=======================================");
+        int choice = input.nextInt();
+        switch (choice){
+            case 1:
+                signup();
                 main(args);
+                break;
+            case 2:
+                if(login()){
+                    menu(args);
+                }else{
+                    main(args);
+                }
+                break;
+            case 3:
+                System.out.println("\nThank you for using Abu Dhabi University Bank!");
+                System.exit(0);
+            default:
+                System.out.println("\nInvalid choice, please try again");
+                System.out.println("=======================================\n");
+                main(args);
+                break;
+        }
+    }
+    
+    public static void menu(String[] args){
+        while(true){
+            System.out.println("=======================================");
+            System.out.println("Menu:\n");
+            System.out.println("1) View balance");
+            System.out.println("2) Deposit money");
+            System.out.println("3) Withdraw money");
+            System.out.println("4) Transfer money");
+            System.out.println("5) Delete account");
+            System.out.println("6) Logout");
+            System.out.println("=======================================");
+            int choice = input.nextInt();
+            switch (choice) {
+                case 1:
+                    viewBalance();
+                    break;
+                case 2:
+                    depositMoney();
+                    break;
+                case 3:
+                    withdrawMoney();
+                    break;
+                case 4:
+                    transferMoney();
+                    break;
+                case 5:
+                    deleteAccount(args);
+                    break;
+                case 6:
+                    System.out.println("\nYou've been logged out!");
+                    System.out.println("=======================================");
+                    main(args);
+                    break;
+                default:
+                    System.out.println("\nInvalid choice, please try again");
+                    break;
             }
         }
     }
-    public static int createAccount(){
-        //this method is for creating an new account and will store all your info in arrays
-        System.out.println("\n==========================================");
-        System.out.print("Please enter your name: ");
-        int index = returnnullIndex(names);
-        names[index] = information.next();
-        System.out.print("Please enter your phone number: ");
-        numbers[index] = information.nextInt();
-        System.out.print("Please enter your salary: ");
-        salary[index] = information.nextDouble();
+    
+    public static void signup(){
+        input.nextLine();
+        int index = emptyIndex(IDs);
+        System.out.print("\nPlease enter your name: ");
+        String name = input.nextLine();
         System.out.print("Please enter your gender: ");
-        gender[index] = information.next();
-        int acnum = getAccountNum();
-        acounts[index]=acnum;
-        System.out.println("==========================================");
-        System.out.println("Your acccount number is: " + acnum);
-        System.out.print("Please set your pin (Numbers only): ");
-        ipin = information.nextInt();
-        pin[index] = ipin;
-        System.out.println("==========================================");
-        return 0;
+        String gender = input.nextLine();
+        System.out.print("Please enter your phone number: ");
+        int phone = input.nextInt();
+        int id = randomId();
+        System.out.println("\nYour auto generated acccount number is " + id);
+        input.nextLine();
+        System.out.print("Please set your 4-digit PIN: ");
+        String pin = input.nextLine();
+        if (checkPin(pin)){
+            IDs[index] = id;
+            PINs[index] = pin;
+            System.out.println("\nAccount created succefully!");
+        }else{
+            System.out.println("\nAccount was not created!");
+        }
+        System.out.println("=======================================");
     }
+    
+    public static boolean checkPin(String pin){
+        for(int i = 0; i < pin.length(); i++){
+            if(pin.charAt(i) >= '0' && pin.charAt(i) <= '9' && pin.length() == 4){
+                continue;
+            }else{
+                return false;
+            }
+        }
+        return true;
+    }
+    
     public static boolean login(){
-        //this method is for login
-        int an;
-        int pins;
-        System.out.println("Enter your account number:");
-        an = information.nextInt();
-        int index = returnIndexForAcount(an);
-        if (acounts[index] == an){
-            //if account exist it will ask for pin
-            System.out.println("Enter your pin: ");
-            int p = information.nextInt();
-            if (p == ipin){
-                //if pin enterd correspondence with user pin you will login
-                loginAcc = an;
+        System.out.print("\nEnter your account number: ");
+        int id = input.nextInt();
+        int index = accountIndex(id);
+        if (index != -1){
+            input.nextLine();
+            System.out.print("Enter your 4-digit PIN: ");
+            String pin = input.nextLine();
+            if (PINs[index].equals(pin)){
+                loginAcc = id;
+                System.out.println("\nLogin successful!");
                 return true;
             }
         }
+        System.out.println("\nIncorrect login");
+        System.out.println("=======================================");
         return false;
     }
-    public static double getBalance(int accnum){
-        //this method is to view your balance
-        System.out.println("Your balance is "+balance[returnIndexForAcount(accnum)]+" AED");
-        return balance[returnIndexForAcount(accnum)];
+    
+    public static double viewBalance(){
+        int index = accountIndex(loginAcc);
+        System.out.println("\nYour have " + balance[index] + " AED in your account");
+        return balance[index];
     }
-    public static void Deposit(double amount , int accnum){
-        //this method will add the amount you entered to your balance
-        balance[returnIndexForAcount(accnum)] += amount;
-        System.out.println("You have deposited " + amount + " AED");
-    }
-    public static void withDraw(double amount , int accnum){
-        //this method is for withdraw
-        double bal = balance[returnIndexForAcount(accnum)];
-        if(amount<= bal){
-            //if you had enough money in your account then it will be deducted from your balance
-            balance[returnIndexForAcount(accnum)] -= amount;
-            System.out.println("You have withdraw " + amount + " AED");
+    
+    public static void depositMoney(){
+        int index = accountIndex(loginAcc);
+        System.out.print("\nPlease enter the deposit amount: ");
+        double depositAmount = input.nextDouble();
+        if(depositAmount > 0){
+            balance[index] += depositAmount;
+            System.out.println("\nThe amount has been successfully deposited to your account!");
         }else{
-            //if you didnt have enogh money then the transaction wont be done
-            System.out.println("Sorry your Balance not enough for transaction");
+            System.out.println("\nTransaction failed!");
         }
     }
-    public static void getLoan(double amount , int accnum){
-        //this method is for the loan
-        if((amount/loanPerc)<=salary[returnIndexForAcount(accnum)]){
-            //if the amount you entered gets approved by the bank the it will be added to your balance
-            //example: if your salary is 1000 the the maximum load you can get is 10000 (1000*10)
-            balance[returnIndexForAcount(accnum)] += amount;
-            System.out.println(amount + " AED loan have been approved and credited to your account");
+    
+    public static void withdrawMoney(){
+        int index = accountIndex(loginAcc);
+        System.out.print("\nPlease enter the withdrawal amount: ");
+        double withdrawAmount = input.nextDouble();
+        if(withdrawAmount <= balance[index] && withdrawAmount > 0){
+            balance[index] -= withdrawAmount;
+            System.out.println("The amount has been successfully withdrawn from your account!");
         }else{
-            //and if its more than 10000 then your request will be rejected
-            System.out.println("Sorry You Cant get this loan");
+            System.out.println("\nTransaction failed!");
         }
     }
-    public static boolean delete(){
-        //this method deletes your account and all your information
-        int an  = 0;
-        System.out.println("Enter yout account number for confirmation:");
-        an = information.nextInt();  
-        int index = returnIndexForAcount(an);
-        acounts[index] = 0;
-        pin[index] = 0 ;
-        names[index]=null;
-        return true;
+    
+    public static void transferMoney(){
+        int index = accountIndex(loginAcc);
+        System.out.print("\nPlease enter the recipient acount number: ");
+        int recipient = input.nextInt();
+        int recipientIndex = accountIndex(recipient);
+        if(recipientIndex != -1){
+            System.out.print("Please enter the amount you want to transfer: ");
+            double amount = input.nextDouble();
+            if(amount <= balance[index] && amount > 0){
+                balance[index] -= amount;
+                balance[recipientIndex] += amount;
+                System.out.println("\nThe amount has been successfully transferred!");
+            }else{
+                System.out.println("\nTransaction failed!");
+            }
+        }else{
+            System.out.println("\nInvalid account number!");
+        }
     }
-    public static int returnIndexForAcount(int accnum){
-        //this mathod search for acount and return the indx of acccount number from array
-        for(int i =0 ; i<acounts.length ; i++){
-            if(acounts[i] == accnum){
-                return i;
+    
+    public static void deleteAccount(String[] args){
+        System.out.println("\nARE YOU SURE YOU WANT TO DELETE YOUR ACCOUNT?");
+        System.out.println("1) Yes\n2) No");
+        System.out.println("=======================================");
+        int confirmation = input.nextInt();
+        switch (confirmation){
+            case 1:
+                int index = accountIndex(loginAcc);
+                IDs[index] = 0;
+                PINs[index] = null;
+                balance[index] = 0;
+                System.out.println("\nAccount deleted successfully!");
+                System.out.println("=======================================");
+                main(args);
+                break;
+            case 2:
+                System.out.println("\nDeletion canceled!");
+                break;
+            default:
+                System.out.println("\nInvalid choice, please try again");
+                break;
+        }
+    }
+    
+    public static int accountIndex(int id){
+        for(int index = 0 ; index < IDs.length ; index++){
+            if(IDs[index] == id){
+                return index;
             }
         }
-        return 0;
+        return -1;
     }
-    public static int returnnullIndex(int x[]){
-        //this mathod get index of empty place in array of int
-        for(int i =0 ; i<x.length ; i++){
-            if(x[i] ==0){
-                return i;
+    
+    public static int emptyIndex(int IDs[]){
+        for(int index = 0 ; index < IDs.length ; index++){
+            if(IDs[index] == 0){
+                return index;
             }
         }
-        return 0;
+        return -1;
     }
-    public static int returnnullIndex(String x[]){
-        for(int i =0 ; i<x.length ; i++){
-            if(x[i] == null){
-                return i;
-            }
+    
+    public static int randomId(){
+        int id = (int)(Math.random() * 900000) + 100000;
+        if(isUnique(id)){
+            return id;
+            
+        }else{
+            randomId();
         }
-        return 0;
+        return -1;
     }
-    public static int getAccountNum() {
-        //It will generate 6 digit random Number
-        Random rnd = new Random();
-        int number = rnd.nextInt(999999);
-        int num = Integer.valueOf(String.format("%06d", number).trim());
-        if(!isAccountNumUnique(num)){
-            //if the account number is taken it will generate a new account number
-            getAccountNum();
-        }
-        return num;
-    }
-    public static boolean isAccountNumUnique(int num){
-        for(int i =0 ; i<acounts.length ; i++){
-            if(acounts[i] == num){
+    
+    public static boolean isUnique(int num){
+        for(int index = 0 ; index < IDs.length ; index++){
+            if(IDs[index] == num){
                 return false;
             }
         }
