@@ -52,13 +52,26 @@ public class ADUB {
                     viewBalance();
                     break;
                 case 2:
-                    depositMoney();
+                    System.out.print("\nPlease enter the deposit amount: ");
+                    double depositAmount = input.nextDouble();
+                    depositMoney(depositAmount);
                     break;
                 case 3:
-                    withdrawMoney();
+                    System.out.print("\nPlease enter the withdrawal amount: ");
+                    double withdrawAmount = input.nextDouble();
+                    withdrawMoney(withdrawAmount);
                     break;
                 case 4:
-                    transferMoney();
+                    System.out.print("\nPlease enter the recipient acount number: ");
+                    int recipient = input.nextInt();
+                    int recipientIndex = accountIndex(recipient);
+                    if(recipientIndex != -1){
+                        System.out.print("Please enter the amount you want to transfer: ");
+                        double amount = input.nextDouble();
+                        transferMoney(recipientIndex, amount);
+                    } else {
+                        System.out.println("\nInvalid account number!");
+                    }
                     break;
                 case 5:
                     deleteAccount(args);
@@ -135,47 +148,34 @@ public class ADUB {
         return balance[index];
     }
     
-    public static void depositMoney(){
+    public static void depositMoney(double amount){
         int index = accountIndex(loginAcc);
-        System.out.print("\nPlease enter the deposit amount: ");
-        double depositAmount = input.nextDouble();
-        if(depositAmount > 0){
-            balance[index] += depositAmount;
+        if(amount > 0){
+            balance[index] += amount;
             System.out.println("\nThe amount has been successfully deposited to your account!");
         }else{
             System.out.println("\nTransaction failed!");
         }
     }
     
-    public static void withdrawMoney(){
+    public static void withdrawMoney(int amount){
         int index = accountIndex(loginAcc);
-        System.out.print("\nPlease enter the withdrawal amount: ");
-        double withdrawAmount = input.nextDouble();
-        if(withdrawAmount <= balance[index] && withdrawAmount > 0){
-            balance[index] -= withdrawAmount;
+        if(amount <= balance[index] && amount > 0){
+            balance[index] -= amount;
             System.out.println("The amount has been successfully withdrawn from your account!");
         }else{
             System.out.println("\nTransaction failed!");
         }
     }
     
-    public static void transferMoney(){
+    public static void transferMoney(int recipientIndex, double amount){
         int index = accountIndex(loginAcc);
-        System.out.print("\nPlease enter the recipient acount number: ");
-        int recipient = input.nextInt();
-        int recipientIndex = accountIndex(recipient);
-        if(recipientIndex != -1){
-            System.out.print("Please enter the amount you want to transfer: ");
-            double amount = input.nextDouble();
-            if(amount <= balance[index] && amount > 0){
-                balance[index] -= amount;
-                balance[recipientIndex] += amount;
+        if(amount <= balance[index] && amount > 0){
+            balance[index] -= amount;
+            balance[recipientIndex] += amount;
                 System.out.println("\nThe amount has been successfully transferred!");
-            }else{
-                System.out.println("\nTransaction failed!");
-            }
         }else{
-            System.out.println("\nInvalid account number!");
+            System.out.println("\nTransaction failed!");
         }
     }
     
