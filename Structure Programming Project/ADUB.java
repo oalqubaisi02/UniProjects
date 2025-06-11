@@ -158,7 +158,7 @@ public class ADUB {
         }
     }
     
-    public static void withdrawMoney(int amount){
+    public static void withdrawMoney(double amount){
         int index = accountIndex(loginAcc);
         if(amount <= balance[index] && amount > 0){
             balance[index] -= amount;
@@ -169,7 +169,16 @@ public class ADUB {
     }
     
     public static void transferMoney(int recipientIndex, double amount){
-        int index = accountIndex(loginAcc);
+    	int index = 0;
+        for(int i = 0 ; i < IDs.length ; i++){
+            if(IDs[i] == loginAcc){
+                index = i;
+                break;
+            }
+            else{
+                continue;
+            }
+        }
         if(amount <= balance[index] && amount > 0){
             balance[index] -= amount;
             balance[recipientIndex] += amount;
